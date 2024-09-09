@@ -31,7 +31,7 @@ class ListingDataModel(BaseModel):
         property_type = cls.extract_data(soup, 'ul[data-testid=key-facts] li svg[data-testid=icon-home]+div p.listing-key-fact-item-value', str)
         time_on_website = cls.extract_data(soup, 'ul[data-testid=key-facts] li svg[data-testid=icon-calendar]+div p.listing-key-fact-item-value', str)
         county = cls.get_county(address)
-        price_per_acre = acres / price if price else None
+        price_per_acre = price / acres if price != 0 and acres != 0 and price != None and acres != None else None
         return cls(
             Price=price if price is not None else 0.0,
             Bedrooms=beds if beds is not None else 0,
