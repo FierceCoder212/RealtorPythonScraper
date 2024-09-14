@@ -7,7 +7,7 @@ from Models.ListingScrapingModel import ListingScrapingModel
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-origins = ['*']
+origins = ['*','chrome-extension://edclgijkckipjdcjloklldklbmiakabb']
 
 # Add the CORS middleware
 app.add_middleware(
@@ -25,7 +25,7 @@ def scrape_listing(scraping_model: ListingScrapingModel):
     listing_data = ListingDataModel.from_soup(soup, scraping_model.link)
     body = listing_data.model_dump()
     print(body)
-    response = requests.post('https://localhost:7295/api/Land/SaveLand', json=body, verify=False)
+    response = requests.post('http://localhost:8080/api/Land/SaveLand', json=body, verify=False)
     if response.status_code != 200:
         raise Exception(f'.net Api responded with {response.status_code}, {response.text}')
     return ''
